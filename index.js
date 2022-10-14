@@ -16,7 +16,7 @@ class ContaCorrente {
     depositar(valor) {
         if (valor <= 0)
         {
-           return; //o que eu não quero primeiro 
+           return; //o retorno colocado primeiro
         } 
         this._saldo += valor;
     }
