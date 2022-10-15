@@ -1,27 +1,5 @@
-class Cliente {
-    nome;
-    cpf;
-}
-class ContaCorrente {
-    agencia;
-    // #saldo = 0 proposta de mudança para cerquilha ainda não implementada
-    _saldo = 0; //boa pratica usar o _ underline ao invés da cerquilha #
-
-    sacar(valor) {
-        if (this._saldo >= valor) {
-            this._saldo -= valor;
-            return valor;
-        }
-    }
-    depositar(valor) {
-        if (valor <= 0)
-        {
-           return; //o retorno colocado primeiro
-        } 
-        this._saldo += valor;
-    }
-}
-
+import { Cliente } from "./Cliente.js";
+import {ContaCorrente} from "./ContaCorrente.js";
 const cliente1 = new Cliente();
 cliente1.nome = "Ricardo";
 cliente1.cpf = "11122233309";
@@ -31,14 +9,17 @@ cliente2.nome = "Alice";
 cliente2.cpf = "88822233309";
 
 const contaCorrenteRicardo = new ContaCorrente();
-
 contaCorrenteRicardo.agencia = 1001;
+contaCorrenteRicardo.cliente = cliente1;
+contaCorrenteRicardo.depositar(500);
 
-contaCorrenteRicardo.depositar(-100);
-contaCorrenteRicardo.depositar(100);
-contaCorrenteRicardo.depositar(100);
+const conta2 = new ContaCorrente();
+conta2.cliente = cliente2;
+conta2.agencia = 102;
 
-const valorSacado = contaCorrenteRicardo.sacar(50);
-console.log(valorSacado);
+let valor = 200;
+contaCorrenteRicardo.transferir(valor, conta2);
 
-console.log(contaCorrenteRicardo);
+console.log("valor", valor);
+console.log(conta2);
+//console.log(contaCorrenteRicardo);
