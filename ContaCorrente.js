@@ -1,23 +1,32 @@
 import { Cliente } from "./Cliente.js";
 
 export class ContaCorrente {
+    static numeroDeContas = 0; /**atributo/variável estático  da classe */
     agencia;
     _cliente;
-    // #saldo = 0 proposta de mudança para cerquilha ainda não implementada
+    // https://github.com/tc39/proposal-class-fields sobre private deve ser usado # mais ainda não autorizado,  por convenção usar o _underline
 
-    set cliente(novoValor){/**Assessor set */
-        if(novoValor instanceof Cliente){
+    constructor(agencia, cliente) {
+        this.agencia = agencia;
+        this._cliente = cliente;
+        ContaCorrente.numeroDeContas += 1; /**variavel da classe */
+    }
+
+    get cliente() {
+        /**assessor get */
+        return this._cliente;
+    }
+
+    set cliente(novoValor) {
+        /**Assessor set */
+        if (novoValor instanceof Cliente) {
             this._cliente = novoValor;
         }
     }
-    get cliente(){/**assessor get */
-        return this._cliente;
-        }
-    
 
     _saldo = 0; //boa pratica usar o _ underline ao invés da cerquilha para atributo privado
 
-    get saldo(){
+    get saldo() {
         return this._saldo;
     }
 
@@ -27,12 +36,14 @@ export class ContaCorrente {
             return valor;
         }
     }
+
     depositar(valor) {
         if (valor <= 0) {
             return; //o retorno colocado primeiro
         }
         this._saldo += valor;
     }
+
     transferir(valor, conta) {
         /**primeiro saca */
         const valorSacado = this.sacar(valor);
